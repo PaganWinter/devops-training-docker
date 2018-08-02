@@ -100,7 +100,7 @@ export NAME=kubecluster.mohananz.tk
 export KOPS_STATE_STORE=s3://kube-mohanraz-ml-state-store
 ```
 
-### Create cluster configuration
+### Create Cluster configuration
 kops create cluster \
     --zones=us-east-1a,us-east-1b,us-east-1c \
     --master-zones=us-east-1a,us-east-1b,us-east-1c \
@@ -119,6 +119,42 @@ kubectl -n kube-system get pods
 
 ```
 
+### kubectl
+```
+kubectl get namespaces
+kubectl get pods --namespace=kube-system
+
+kubectl create namespace test-ns
+
+kubectl config set-context $(kubectl config current-context) --namespace=test-ns
+
+# Validate it
+kubectl config view | grep namespace:
+```
+
+### Create config yaml and apply
+```
+kubectl apply -f web.yaml
+
+kubectl get deployments
+kubectl get services
+kubectl get pods
+
+kubectl describe service frontend
+
+kubectl delete deployment nginx-deployment
+kubectl delete service frontend
+
+
+```
+
+
+```
+kubectl apply
+kubectl get
+kubectl describe
+kubectl delete
+```
 
 
 
