@@ -157,6 +157,18 @@ kubectl delete
 ```
 
 
+### threetier app
+```
+add jenkins user to docker group and restart jenkins service
+install ansible and boto libs for ansible
+copy ~/.kube/config to /var/lib/jenkins and change owner to jenkins user
+
+On jenkins, install
+- Cloudbees docker build & publish
+- Cloudbees Amazon web services credentials
+- Ansible
+```
+
 
 https://mcdtu.files.wordpress.com/2017/03/toc-klp-mishra.pdf
 http://xunit.github.io/docs/getting-started-desktop.html#write-first-theory
