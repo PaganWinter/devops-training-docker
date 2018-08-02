@@ -159,6 +159,12 @@ kubectl delete
 
 ### threetier app
 ```
+docker: build images and push to dockerhub
+DB: deploy DB using ansible
+kubectl: deploy BE and FE
+AWS: deploy DNS
+
+
 add jenkins user to docker group and restart jenkins service
 install ansible and boto libs for ansible
 copy ~/.kube/config to /var/lib/jenkins and change owner to jenkins user
