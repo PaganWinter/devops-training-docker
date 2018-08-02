@@ -65,3 +65,62 @@ docker run -d --name my-nginx-php -p 9000:80 nginx-php:1.0
 docker run -d --name my-nginx-php -p 9000:80 nginx-php:1.0
 
 docker exec -it my-apache-app /bin/bash
+
+docker tag nginx-php:1.0 paganwinter/my-nginx-php:latest
+docker tag nginx-php:1.0 paganwinter/my-nginx-php:1.0
+
+docker login
+docker push paganwinter/my-nginx-php
+
+## Kubernetes
+
+### Create S3 Bucket for Kops state storage:
+```
+aws s3api create-bucket --bucket kube-paganwinter-tk-state-store --region us-east-1
+aws s3api put-bucket-versioning --bucket kube-paganwinter-tk-state-store --versioning-configuration Status=Enabled
+```
+
+### Install Kops
+```
+wget -O kops https://github.com/kubernetes/kops/releases/download/1.8.1/kops-linux-amd64
+chmod +x ./kops
+sudo mv ./kops /usr/local/bin/
+```
+
+### Install kubectl
+```
+wget -O kubectl https://storage.googleapis.com/kubernetes-release/release/v1.8.1/bin/linux/amd64/kubectl
+chmod +x ./kubectl
+sudo mv ./kubectl /usr/local/bin/kubectl
+```
+
+### Set env vars for kops
+```
+export NAME=kubecluster.mohananz.tk
+export KOPS_STATE_STORE=s3://kube-mohanraz-ml-state-store
+```
+
+### Create cluster configuration
+kops create cluster \
+    --zones=us-east-1a,us-east-1b,us-east-1c \
+    --master-zones=us-east-1a,us-east-1b,us-east-1c \
+    --node-count=4 \
+    --node-size=t2.small \
+    --master-size=t2.small \
+    --name ${NAME}
+
+### Build the Cluster
+```
+kops update cluster ${NAME} --yes
+
+kops validate cluster
+
+kubectl -n kube-system get pods
+
+```
+
+
+
+
+https://mcdtu.files.wordpress.com/2017/03/toc-klp-mishra.pdf
+http://xunit.github.io/docs/getting-started-desktop.html#write-first-theory
